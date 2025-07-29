@@ -11,10 +11,16 @@
 <body>
   <h1>Kids Learning Environment</h1>
   <p>Select a profile:</p>
-  <ul class="profile-list">
-    <li><a href="profile.html?child=Kid1">Kid 1 Profile</a></li>
-    <li><a href="profile.html?child=Kid2">Kid 2 Profile</a></li>
-  </ul>
+  <ul class="profile-list"></ul>
+
+  <section>
+    <h2>Add Profile</h2>
+    <form id="addKidForm">
+      <input type="text" id="kidName" placeholder="Kid's Name" required>
+      <button type="submit">Add</button>
+    </form>
+  </section>
+  <script src="index.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('service-worker.js');

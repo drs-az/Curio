@@ -21,24 +21,43 @@ document.addEventListener('DOMContentLoaded', function() {
     localStorage.setItem(certKey, JSON.stringify(certs));
   }
 
+  function parseVideoUrl(url) {
+    const yt = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([\w-]+)/);
+    if (yt) {
+      return { url: `https://www.youtube.com/embed/${yt[1]}?rel=0`, embed: true };
+    }
+    return { url: url, embed: false };
+  }
+
   function renderVideos() {
     videoList.innerHTML = '';
-    videos.forEach((v, idx) => {
+    videos.forEach(v => {
       const container = document.createElement('div');
       const title = document.createElement('div');
       title.textContent = v.title;
-      const video = document.createElement('video');
-      video.controls = true;
-      video.src = v.url;
-      video.width = 480;
-      video.addEventListener('ended', function() {
-        const c = { title: v.title, date: new Date().toLocaleDateString() };
-        certs.push(c);
-        saveCerts();
-        renderCerts();
-      });
-      container.appendChild(title);
-      container.appendChild(video);
+      if (v.embed) {
+        const iframe = document.createElement('iframe');
+        iframe.src = v.url;
+        iframe.width = 480;
+        iframe.height = 270;
+        iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin');
+        iframe.setAttribute('allow', 'autoplay; encrypted-media');
+        container.appendChild(title);
+        container.appendChild(iframe);
+      } else {
+        const video = document.createElement('video');
+        video.controls = true;
+        video.src = v.url;
+        video.width = 480;
+        video.addEventListener('ended', function() {
+          const c = { title: v.title, date: new Date().toLocaleDateString() };
+          certs.push(c);
+          saveCerts();
+          renderCerts();
+        });
+        container.appendChild(title);
+        container.appendChild(video);
+      }
       videoList.appendChild(container);
     });
   }
@@ -73,13 +92,14 @@ document.addEventListener('DOMContentLoaded', function() {
       const file = fileInput.files[0];
       const reader = new FileReader();
       reader.onload = function(ev) {
-        videos.push({ title: title, url: ev.target.result });
+        videos.push({ title: title, url: ev.target.result, embed: false });
         saveVideos();
         renderVideos();
       };
       reader.readAsDataURL(file);
     } else if (urlInput.value) {
-      videos.push({ title: title, url: urlInput.value });
+      const parsed = parseVideoUrl(urlInput.value);
+      videos.push({ title: title, url: parsed.url, embed: parsed.embed });
       saveVideos();
       renderVideos();
     }
