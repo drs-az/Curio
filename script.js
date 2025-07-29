@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function renderVideos() {
     videoList.innerHTML = '';
-    videos.forEach(v => {
+    videos.forEach((v, idx) => {
       const container = document.createElement('div');
       const title = document.createElement('div');
       title.textContent = v.title;
@@ -68,10 +68,22 @@ document.addEventListener('DOMContentLoaded', function() {
           badge.style.display = 'inline-block';
         });
 
+        const del = document.createElement('button');
+        del.textContent = 'Delete';
+        del.className = 'delete-btn';
+        del.addEventListener('click', () => {
+          if (confirm(`Delete ${v.title}?`)) {
+            videos.splice(idx, 1);
+            saveVideos();
+            renderVideos();
+          }
+        });
+
         const controls = document.createElement('div');
         controls.className = 'controls';
         controls.appendChild(button);
         controls.appendChild(badge);
+        controls.appendChild(del);
 
         container.appendChild(title);
         container.appendChild(iframe);
@@ -95,9 +107,21 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         container.appendChild(title);
         container.appendChild(video);
+        const del = document.createElement('button');
+        del.textContent = 'Delete';
+        del.className = 'delete-btn';
+        del.addEventListener('click', () => {
+          if (confirm(`Delete ${v.title}?`)) {
+            videos.splice(idx, 1);
+            saveVideos();
+            renderVideos();
+          }
+        });
+
         const controls = document.createElement('div');
         controls.className = 'controls';
         controls.appendChild(badge);
+        controls.appendChild(del);
         container.appendChild(controls);
       }
       videoList.appendChild(container);
