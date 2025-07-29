@@ -10,6 +10,10 @@ document.addEventListener('DOMContentLoaded', function() {
   let videos = JSON.parse(localStorage.getItem(videosKey) || '[]');
   let certs = JSON.parse(localStorage.getItem(certKey) || '[]');
 
+  function hasCertificate(title) {
+    return certs.some(c => c.title === title);
+  }
+
   const videoList = document.getElementById('videoList');
   const certList = document.getElementById('certList');
 
@@ -46,6 +50,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const button = document.createElement('button');
         button.textContent = 'Get Certificate';
+        const badge = document.createElement('span');
+        badge.textContent = 'Completed';
+        badge.className = 'badge';
+        badge.style.display = hasCertificate(v.title) ? 'inline-block' : 'none';
+
         button.addEventListener('click', function () {
           const pass = prompt('Enter passcode');
           if (pass !== 'LearningIsFun!') {
@@ -56,24 +65,40 @@ document.addEventListener('DOMContentLoaded', function() {
           certs.push(c);
           saveCerts();
           renderCerts();
+          badge.style.display = 'inline-block';
         });
+
+        const controls = document.createElement('div');
+        controls.className = 'controls';
+        controls.appendChild(button);
+        controls.appendChild(badge);
 
         container.appendChild(title);
         container.appendChild(iframe);
-        container.appendChild(button);
+        container.appendChild(controls);
       } else {
         const video = document.createElement('video');
         video.controls = true;
         video.src = v.url;
         video.style.width = '100%';
+        const badge = document.createElement('span');
+        badge.textContent = 'Completed';
+        badge.className = 'badge';
+        badge.style.display = hasCertificate(v.title) ? 'inline-block' : 'none';
+
         video.addEventListener('ended', function() {
           const c = { title: v.title, date: new Date().toLocaleDateString() };
           certs.push(c);
           saveCerts();
           renderCerts();
+          badge.style.display = 'inline-block';
         });
         container.appendChild(title);
         container.appendChild(video);
+        const controls = document.createElement('div');
+        controls.className = 'controls';
+        controls.appendChild(badge);
+        container.appendChild(controls);
       }
       videoList.appendChild(container);
     });
