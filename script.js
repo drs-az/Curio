@@ -40,10 +40,27 @@ document.addEventListener('DOMContentLoaded', function() {
         iframe.src = v.url;
         iframe.style.width = '100%';
         iframe.style.aspectRatio = '16 / 9';
-        iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin');
-        iframe.setAttribute('allow', 'autoplay; encrypted-media');
+        iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-presentation');
+        iframe.setAttribute('allow', 'autoplay; encrypted-media; fullscreen');
+        iframe.setAttribute('allowfullscreen', '');
+
+        const button = document.createElement('button');
+        button.textContent = 'Get Certificate';
+        button.addEventListener('click', function () {
+          const pass = prompt('Enter passcode');
+          if (pass !== 'LearningIsFun!') {
+            alert('Incorrect passcode');
+            return;
+          }
+          const c = { title: v.title, date: new Date().toLocaleDateString() };
+          certs.push(c);
+          saveCerts();
+          renderCerts();
+        });
+
         container.appendChild(title);
         container.appendChild(iframe);
+        container.appendChild(button);
       } else {
         const video = document.createElement('video');
         video.controls = true;
