@@ -61,6 +61,11 @@ document.addEventListener('DOMContentLoaded', function() {
   const form = document.getElementById('addVideoForm');
   form.addEventListener('submit', function(e) {
     e.preventDefault();
+    const pass = document.getElementById('passcode').value;
+    if (pass !== 'LearningIsFun!') {
+      alert('Incorrect passcode');
+      return;
+    }
     const title = document.getElementById('videoTitle').value || 'Untitled';
     const urlInput = document.getElementById('videoUrl');
     const fileInput = document.getElementById('videoFile');
