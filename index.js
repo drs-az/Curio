@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const li = document.createElement('li');
       const a = document.createElement('a');
       a.href = `profile.html?child=${encodeURIComponent(name)}`;
-      a.textContent = `${name} Profile`;
+      a.textContent = `${name}'s Profile`;
       const del = document.createElement('button');
       del.textContent = 'Delete';
       del.className = 'delete-btn';
