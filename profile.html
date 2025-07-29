@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Profile</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1 id="profileName"></h1>
+  <section>
+    <h2>Add Video</h2>
+    <form id="addVideoForm">
+      <input type="text" id="videoTitle" placeholder="Video Title" required>
+      <input type="url" id="videoUrl" placeholder="Video URL">
+      <span>or</span>
+      <input type="file" id="videoFile" accept="video/*">
+      <button type="submit">Add Video</button>
+    </form>
+  </section>
+  <section>
+    <h2>Videos</h2>
+    <div id="videoList"></div>
+  </section>
+  <section>
+    <h2>Certificates</h2>
+    <ul id="certList"></ul>
+  </section>
+  <script src="script.js"></script>
+</body>
+</html>
