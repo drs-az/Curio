@@ -141,3 +141,8 @@ video, iframe {
   gap: 8px;
   margin-top: 5px;
 }
+
+/* Space out videos in the list */
+#videoList > div {
+  margin-bottom: 20px;
+}
