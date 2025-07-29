@@ -38,8 +38,8 @@ document.addEventListener('DOMContentLoaded', function() {
       if (v.embed) {
         const iframe = document.createElement('iframe');
         iframe.src = v.url;
-        iframe.width = 480;
-        iframe.height = 270;
+        iframe.style.width = '100%';
+        iframe.style.aspectRatio = '16 / 9';
         iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin');
         iframe.setAttribute('allow', 'autoplay; encrypted-media');
         container.appendChild(title);
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const video = document.createElement('video');
         video.controls = true;
         video.src = v.url;
-        video.width = 480;
+        video.style.width = '100%';
         video.addEventListener('ended', function() {
           const c = { title: v.title, date: new Date().toLocaleDateString() };
           certs.push(c);

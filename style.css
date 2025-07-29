@@ -50,12 +50,14 @@ button:hover {
   background: #45a049;
 }
 
-video {
+video, iframe {
   display: block;
   margin-bottom: 10px;
+  width: 100%;
   max-width: 100%;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  aspect-ratio: 16/9;
 }
 
 .certificate {
